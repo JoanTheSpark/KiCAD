@@ -5,6 +5,6 @@ The models are oriented so that pin 1 is at the top left most times (I think the
 
 License wise those are all GPLv3+ which is commented into the STEP files - for the VRML files I haven't added that yet, but will do in due course.
 
-If you find any errors, please send me a message here or on Github.
+If you find any errors, please leave me a message.
 
 I'll upload footprints to those models once I have aligned them to the 3D models.

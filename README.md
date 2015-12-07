@@ -23,7 +23,7 @@ Joan The Spark
 Documentation
 =============
 
-The main discussion can be found on the Kicad-Info.com forums
+The main discussion can be found on the Kicad-Info.com forums here - 
 [New Library](https://forum.kicad.info/t/3d-new-library-for-mechanical-cad-exporting-and-enclosure-design/1763).
 
 License

@@ -11,6 +11,8 @@ The models are oriented so that pin 1 is at the top left most times (-X axis, +Y
 
 License wise those are all GPLv3+ which is commented into the STEP and VRML files.
 
+![overview](https://github.com/JoanTheSpark/KiCAD/blob/master/3D-shapes.jpg)
+
 If you find any errors, please leave me a message.
 
 Authors

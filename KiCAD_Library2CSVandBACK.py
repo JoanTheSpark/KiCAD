@@ -73,7 +73,7 @@ if __name__=='__main__':
                 CNT_line += 1
                 if line[:4] == "DEF ": # find symbol start
                     LIST_thisSymbol = [FNME_lib[:-4]]
-                    for j in range(1,6): # get symbol details
+                    for j in range(1,len(LIST_symbols[0])): # get symbol details
                         if BLOB_libfile[CNT_line+j][:3] == ("F"+str(j-1)+" "):
                             LIST_thisSymbol.append(BLOB_libfile[CNT_line+j].split(" ")[1].strip("\""))
                         else:

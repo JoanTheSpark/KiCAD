@@ -102,13 +102,13 @@ if __name__=='__main__':
                             line = line.strip().split(" ")
                             print line[0]+" \""+symbol[CNT_Fx]+"\" "+(" ").join(line[2:])
                         else: # we ran out of available fields to fill in, make more
-                            FLAG_foundSymbol = False
                             for i in range(len(symbol) - CNT_Fx): # add missing fields
-                                last = ""
-                                if (len(symbol) - CNT_Fx - i) == 1: # thats for last field
-                                    last = " \"manf#\""
-                                print "F"+str(CNT_Fx+i-1)+" \""+symbol[CNT_Fx+i]+"\" 0 0 50 H I C CNN"+last
+                                fieldname = ""
+                                if CNT_Fx > 3: # add fieldname if needed
+                                    fieldname = " \""+LIST_symbols[0][CNT_Fx+i]+"\""
+                                print "F"+str(CNT_Fx+i-1)+" \""+symbol[CNT_Fx+i]+"\" 0 0 50 H I C CNN"+fieldname
                             print line, # don't forget to re-print the line that came here
+                            FLAG_foundSymbol = False # we only do this ONCE per symbol
                     else:
                         print line, # print lines we don't care for
                 fileinput.close() # done

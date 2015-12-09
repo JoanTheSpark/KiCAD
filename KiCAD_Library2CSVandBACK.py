@@ -19,7 +19,7 @@
 
 import os, sys, shutil, fileinput
 
-FLDR_toLibs = "."
+FLDR_toLibs = "." #i.e. "E:/Data_KiCAD/KiCAD_Symbols/"
 FLDR_toCSV = "."
 FNME_csv = "symbollist.csv"
 

@@ -59,8 +59,11 @@ def FNC_write_csv(LIST_ofLines, PATH_toCSV):
 if __name__=='__main__':
 
     FLAG_doImport = True # True = make CSV, False = modify Libraries
+    FLAG_dryRun = True # True = do not change libs, just print changes to commandline output
+                       # False = do modify the libs
 
     if FLAG_doImport:
+        # this list is setup so it adds a 'manf#' field automatically into the csv
         LIST_symbols = [["lib","ref","name","footprint","pdf","manf#"]]
         LIST_libs = FNC_get_libs(FLDR_toLibs)
         for FNME_lib in LIST_libs: # go through libs
@@ -78,7 +81,7 @@ if __name__=='__main__':
                     LIST_symbols.append(LIST_thisSymbol)
         FNC_write_csv(LIST_symbols, FLDR_toCSV + FNME_csv)
     else:
-        #now read csv file and add stuff to libs
+        # read csv file and add stuff to libs
         BLOB_csvfile = FNC_read_file(FLDR_toCSV+FNME_csv) # get csv content
         LIST_symbols = []
         for line in BLOB_csvfile: # convert blob to list..
@@ -89,22 +92,22 @@ if __name__=='__main__':
                 CNT_Fx = 0
                 FLAG_foundSymbol = False
                 # open lib file and replace/add when symbol has been found
-                for line in fileinput.input(FLDR_toLibs+symbol[0]+".lib", inplace=1):
+                for line in fileinput.input(FLDR_toLibs+symbol[0]+".lib", inplace=FLAG_dryRUN):
                     CNT_Fx += 1
                     # check that we got the correct symbol
                     if line.startswith("DEF "+symbol[2]+" "+symbol[1]):
-                        print line,
+                        print line, # print line we don't need to mod
                         CNT_Fx = 0
                         FLAG_foundSymbol = True
                     # now fill in the values into the fields (F0 to Fx)
                     elif FLAG_foundSymbol:
                         if line.startswith("F"+str(CNT_Fx-1)+" "): # put in new field values
-                            line = line.strip().split(" ")
-                            print line[0]+" \""+symbol[CNT_Fx]+"\" "+(" ").join(line[2:])
+                            line = line.strip().split(" ") # take line apart
+                            print line[0]+" \""+symbol[CNT_Fx]+"\" "+(" ").join(line[2:]) # make new one
                         else: # we ran out of available fields to fill in, make more
                             for i in range(len(symbol) - CNT_Fx): # add missing fields
                                 fieldname = ""
-                                if CNT_Fx > 3: # add fieldname if needed
+                                if CNT_Fx > 3: # add/modify fieldname if needed
                                     fieldname = " \""+LIST_symbols[0][CNT_Fx+i]+"\""
                                 print "F"+str(CNT_Fx+i-1)+" \""+symbol[CNT_Fx+i]+"\" 0 0 50 H I C CNN"+fieldname
                             print line, # don't forget to re-print the line that came here

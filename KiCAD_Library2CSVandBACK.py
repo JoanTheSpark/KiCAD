@@ -7,7 +7,8 @@
 #-- a csv file.
 #-- If a flag in the code is changed it also
 #-- is able to write field value data from that csv
-#-- back into the local libs.
+#-- back into the local libs. Do not change lib, name
+#-- or reference fields for the import to work!
 #--
 #-- BACKUP YOUR LIBRARIES BEFORE RUNNING THIS!
 #--

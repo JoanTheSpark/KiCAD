@@ -50,7 +50,7 @@ def FNC_write_csv(LIST_ofLines, PATH_toCSV):
         print "broken_2"
     else:
         for line in LIST_ofLines:
-            STR_line = ','.join(line)
+            STR_line = ';'.join(line)
             HDLR_csvfile.write(STR_line + "\n")
         HDLR_csvfile.close()
     return()
@@ -85,7 +85,7 @@ if __name__=='__main__':
         BLOB_csvfile = FNC_read_file(FLDR_toCSV+FNME_csv) # get csv content
         LIST_symbols = []
         for line in BLOB_csvfile: # convert blob to list..
-            LIST_symbols.append(line.strip().split(","))
+            LIST_symbols.append(line.strip().split(";"))
         # got symbol with fieldvalues in variable, let's go..
         for symbol in LIST_symbols[1:]:
             try:

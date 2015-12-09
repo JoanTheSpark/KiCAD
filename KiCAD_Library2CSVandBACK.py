@@ -81,35 +81,48 @@ if __name__=='__main__':
                     LIST_symbols.append(LIST_thisSymbol)
         FNC_write_csv(LIST_symbols, FLDR_toCSV + FNME_csv)
     else:
-        # read csv file and add stuff to libs
+        #now read csv file and add stuff to libs
         BLOB_csvfile = FNC_read_file(FLDR_toCSV+FNME_csv) # get csv content
         LIST_symbols = []
         for line in BLOB_csvfile: # convert blob to list..
             LIST_symbols.append(line.strip().split(";"))
-        # got symbol with fieldvalues in variable, let's go..
+        #kicad optimizes stuff? and deletes fields completely in lib if there is nothing in ""
+        # >> replace empty fields with "_", as we can't have that, can we?
+        for i in range(len(LIST_symbols)):
+            for j in range(len(LIST_symbols[i])):
+                if LIST_symbols[i][j] == "":
+                    LIST_symbols[i][j] = "_"
+        # got symbol with fieldvalues in list-variable, let's go..
         for symbol in LIST_symbols[1:]:
             try:
                 CNT_Fx = 0
                 FLAG_foundSymbol = False
                 # open lib file and replace/add when symbol has been found
-                for line in fileinput.input(FLDR_toLibs+symbol[0]+".lib", inplace=FLAG_dryRUN):
+                for line in fileinput.input(FLDR_toLibs+symbol[0]+".lib", inplace=FLAG_dryRun):
                     CNT_Fx += 1
                     # check that we got the correct symbol
                     if line.startswith("DEF "+symbol[2]+" "+symbol[1]):
-                        print line, # print line we don't need to mod
+                        print line,
                         CNT_Fx = 0
                         FLAG_foundSymbol = True
                     # now fill in the values into the fields (F0 to Fx)
                     elif FLAG_foundSymbol:
                         if line.startswith("F"+str(CNT_Fx-1)+" "): # put in new field values
-                            line = line.strip().split(" ") # take line apart
-                            print line[0]+" \""+symbol[CNT_Fx]+"\" "+(" ").join(line[2:]) # make new one
+                            line = line.strip().split(" ")
+                            fieldname = ""
+                            if CNT_Fx < 3: # F0-F2 keep settings for textsize, etc..
+                                print line[0]+" \""+symbol[CNT_Fx]+"\" "+(" ").join(line[2:])
+                            elif CNT_Fx > 4: # add/mod fieldnames above F4
+                                fieldname = " \""+LIST_symbols[0][CNT_Fx]+"\""
+                                print line[0]+" \""+symbol[CNT_Fx]+"\" 0 0 5 H I C CNN"+fieldname
+                            else: # '0 0 5 H I C CNN' makes datasheet, etc. info tiny small and invisible..
+                                print line[0]+" \""+symbol[CNT_Fx]+"\" 0 0 5 H I C CNN"
                         else: # we ran out of available fields to fill in, make more
                             for i in range(len(symbol) - CNT_Fx): # add missing fields
                                 fieldname = ""
-                                if CNT_Fx > 3: # add/modify fieldname if needed
+                                if CNT_Fx > 3: # add fieldname if needed
                                     fieldname = " \""+LIST_symbols[0][CNT_Fx+i]+"\""
-                                print "F"+str(CNT_Fx+i-1)+" \""+symbol[CNT_Fx+i]+"\" 0 0 50 H I C CNN"+fieldname
+                                print "F"+str(CNT_Fx+i-1)+" \""+symbol[CNT_Fx+i]+"\" 0 0 5 H I C CNN"+fieldname
                             print line, # don't forget to re-print the line that came here
                             FLAG_foundSymbol = False # we only do this ONCE per symbol
                     else:
@@ -118,4 +131,4 @@ if __name__=='__main__':
             except:
                 print "broken_3" # upsi
 
-
+    print "done"

@@ -38,7 +38,7 @@ def FNC_poly (cntr, # (x,y)
 
 if __name__ == '__main__':
 
-    Center = [[-1.2,0.0],[0.0,1.2],[1.2,0.0],[0.0,-1.2]] # x/y coordinates of the centre of the pcb sheet
+    Center = [[-1.2,0.0],[0.0,1.2],[1.2,0.0],[0.0,-1.2]] # x/y coordinates of the centre of circle/arc/polygon
     Radius = 0.75 # mm
     Sides = 9
     StartAngle = [0.0,90.0,180.0,270.0] # degrees

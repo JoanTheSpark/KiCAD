@@ -1,6 +1,6 @@
 # script to create copper leafes for pads
 # the output of this script needs to be manually copied&pasted into a kicad_mod file to work
-# GPLv3+, JoanTheSpark (2016)
+# GPLv3+, JoanTheSpark (2016), written in python 2.7
 
 import sys, os
 import shutil

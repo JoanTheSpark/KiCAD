@@ -210,23 +210,20 @@ if __name__=='__main__':
                                                             for STR_4thlvl in list(FNC_get_next_level("("+STR_3rdlvl+")")):
                                                                 n = 4
                                                                 lvl4 = ' '.join(list(FNC_get_this_level("("+STR_4thlvl+")")))
-                                                                #print n,n*"  ",lvl4
-                                                                
+                                                                #print n,s2[0],"    ",lvl4
                                                                 
                                                                 for s4 in check[n]:
                                                                     if re.search(s4[1],lvl4):
-                                                                        
                                                                         if len(s4[5]) == 2:
-                                                                            
                                                                             for i, val in enumerate(lvl4.split(" ",s4[2])[1:3]):
                                                                                 LST_tmp_fprt.append(('s4',s1[0]+"_"+s4[0]+"_"+s4[5][i],val))
                                                                         else:
-                                                                            LST_tmp_fprt.append(('s4',s1[0]+"_"+s4[0],val))
+                                                                            LST_tmp_fprt.append(('s4',s1[0]+"_"+s4[0],lvl4.split(" ",s4[2])[s4[3]]))
 
             #break                    
             LST_tmp_repo.append(LST_tmp_fprt)
         #break
-        
+
     # make list of lines
     # get header
     LST_hdr = ['RPO','FIL','MOD','STS']

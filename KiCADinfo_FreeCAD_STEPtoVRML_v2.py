@@ -6,6 +6,7 @@ features
 - imports step, exports vrml with scale applied
 - export povray scene for preview thumbnail
 -- model is scaled and moved for that, as camera/light setup is hardcoded
+- render thumbnail
 - add license&info to step file
 - add license&info to vrml file
 - keeps track of changes to step files to avoid redoing already converted ones

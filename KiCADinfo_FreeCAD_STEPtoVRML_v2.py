@@ -628,8 +628,7 @@ if __name__=='__main__':
                     HDLR_stepfile.close()
     
     # rewrite hash file when done
-    if False:
-#    if LIST_stepfiles_clean:
+    if LIST_stepfiles_clean:
         LIST_stepfiles_clean.sort()
         try:
             HDLR_hashfile_w = open(FLDR_toStepFiles + FNME_hashfile, 'w') # open

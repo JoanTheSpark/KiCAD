@@ -1,12 +1,28 @@
 '''
 Automatic STEP to VRML converter for KiCAD with thumbnail creation in Povray
 
+<<<<<<< HEAD
 features:
 - point at folder with step files
 - imports step, exports vrml with scale applied
 - export povray scene for preview thumbnail
   (camera/light setup is hardcoded, model will be adjusted for that)
 - render povray scene
+=======
+needs to be loaded and started  as macro in FreeCAD
+
+tested with:
+- FreeCAD 0.16
+- PovRay 3.7
+- KiCAD 4.2
+
+features
+- point at folder with step files
+- imports step, exports vrml with scale applied
+- export povray scene for preview thumbnail
+-- model is scaled and moved for that, as camera/light setup is hardcoded
+- render thumbnail
+>>>>>>> origin/master
 - add license&info to step file
 - add license&info to vrml file
 - keeps track of changes to step files to avoid redoing already converted ones

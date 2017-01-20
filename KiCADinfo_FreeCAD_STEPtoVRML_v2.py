@@ -1,20 +1,31 @@
 '''
 Automatic STEP to VRML converter for KiCAD with thumbnail creation in Povray
 
-features
+features:
 - point at folder with step files
 - imports step, exports vrml with scale applied
 - export povray scene for preview thumbnail
--- model is scaled and moved for that, as camera/light setup is hardcoded
+  (camera/light setup is hardcoded, model will be adjusted for that)
+- render povray scene
 - add license&info to step file
 - add license&info to vrml file
 - keeps track of changes to step files to avoid redoing already converted ones
 
+needs:
+- FreeCAD 0.16
+- PovRay 3.7
+
+won't do:
+- this script doesn't align step models to sit on your footprints, use StepUP tools for that
+
+ builds up on work by:
  Copyright (c) 2015 Maurice easyw@katamail.com
  Copyright (c) 2015 Hasan Yavuz Özderya
  Copyright Nico
  Copyright (c) 2016 marmni (FreeCAD forums user)
- overall arrangement and snippets came from all over the internet and have been pushed into place by Joan Sparky (c) 2016
+ 
+ overall arrangement and snippets came from all over the internet
+ and have been pushed into place by Joan Sparky (c) 2016
 '''
 
 import sys, os, shutil
@@ -43,13 +54,15 @@ import __builtin__
 import subprocess
 from subprocess import call
 
-PATH_POVrayExecutable = "C:/Program Files/POV-Ray/v3.7/bin/pvengine64.exe" # install povray 3.7, under options there deactivate restrictions for I/O
+# install povray 3.7, under options there deactivate restrictions for I/O
+PATH_POVrayExecutable = "C:/Program Files/POV-Ray/v3.7/bin/pvengine64.exe"
 IMG_W = "150"
 IMG_H = "150"
 
 FLDR_toStepFiles = "E:/Data_Inventor/ElectronicDevices/STEP/"
 FLDR_toVrmlFiles = "E:/Data_Inventor/ElectronicDevices/VRML/"
-FLDR_toPOVrayFiles = "E:/Data_Inventor/ElectronicDevices/POVray/" # this folder will contain the thumbnails
+# this folder will contain the thumbnails and pov ray scenes
+FLDR_toPOVrayFiles = "E:/Data_Inventor/ElectronicDevices/POVray/"
 
 FNME_hashfile = "_StepFileHashes.txt" # stored in STEP folder above
 
@@ -58,6 +71,7 @@ STR_licEmail = "your email"
 STR_licOrgSys = ""
 STR_licPreProc = ""
 
+# change license stuff to your liking, just keep to the list style of it
 LIST_license = ["Copyright (C) "+datetime.now().strftime("%Y")+", " + STR_licAuthor,
                 "",
                 "This program is free software: you can redistribute it and/or modify",
@@ -620,8 +634,7 @@ if __name__=='__main__':
                     HDLR_stepfile.close()
     
     # rewrite hash file when done
-    if False:
-#    if LIST_stepfiles_clean:
+    if LIST_stepfiles_clean:
         LIST_stepfiles_clean.sort()
         try:
             HDLR_hashfile_w = open(FLDR_toStepFiles + FNME_hashfile, 'w') # open
